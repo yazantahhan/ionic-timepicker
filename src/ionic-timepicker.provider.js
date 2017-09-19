@@ -28,6 +28,7 @@ angular.module('ionic-timepicker.provider', [])
 
         var intervalPromise;
         var provider = {};
+        var isTouchDownPersist = false;
         $scope = $rootScope.$new();
         $scope.today = resetHMSM(new Date()).getTime();
         $scope.time = {};
@@ -42,6 +43,7 @@ angular.module('ionic-timepicker.provider', [])
         }
 
         onMouseDownHandler = function(event) {
+            isTouchDownPersist = true;
             var functionToInvoke;
             if (event.target.classList.contains('increase')) {
                 functionToInvoke = increaseHours;
@@ -54,15 +56,26 @@ angular.module('ionic-timepicker.provider', [])
             }
             functionToInvoke();
             $scope.$apply();
-            $timeout(function(){intervalPromise = $interval(functionToInvoke, 100)}, 400);
-            console.log('start');
+            $timeout(function() {
+                intervalPromise = $interval( function(){
+                    if(isTouchDownPersist){
+                        functionToInvoke();
+                    } else {
+                        cancelInterval();
+                    }
+                }, 100)
+            }, 400);
         }
 
         onMouseUpHandler = function() {
-          $timeout(function(){$interval.cancel(intervalPromise);intervalPromise = null;});
-            
-            console.log('end');
-          }
+            isTouchDownPersist = false;
+            cancelInterval();
+        }
+
+        cancelInterval = function() {
+            $interval.cancel(intervalPromise);
+            intervalPromise = null;
+        }
 
 
         //Increasing the hours
