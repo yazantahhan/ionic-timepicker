@@ -2,7 +2,7 @@ var onMouseDownHandler, onMouseUpHandler;
 
 angular.module('ionic-timepicker.provider', [])
 
-.directive('touchEventsHandler', function(ionicTimePicker){
+.directive('touchEventsHandler', function(){
   return {
     link: function(scope, element) {
         element.on('touchstart', onMouseDownHandler);
