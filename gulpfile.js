@@ -13,14 +13,14 @@ gulp.task('html2js', function () {
       moduleName: "ionic-timepicker.templates"
     }))
     .pipe(concat("templates.js"))
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest("./dist"));
 });
 
 gulp.task('css2js', function () {
   return gulp.src("./src/*.css")
     .pipe(css2js())
-    //.pipe(uglify())
+    .pipe(uglify())
     .pipe(gulp.dest("./dist/"));
 });
 
