@@ -27,6 +27,7 @@ angular.module('ionic-timepicker.provider', [])
     this.$get = ['$rootScope', '$ionicPopup', '$interval', '$timeout', function($rootScope, $ionicPopup, $interval, $timeout) {
 
         var intervalPromise;
+        var timeoutPromise;
         var provider = {};
         var isTouchDownPersist = false;
         $scope = $rootScope.$new();
@@ -54,27 +55,39 @@ angular.module('ionic-timepicker.provider', [])
             if (intervalPromise) {
                 $interval.cancel(intervalPromise);
             }
+
+            if(timeoutPromise){
+                $timeout.cancel(timeoutPromise);
+            }
+
             functionToInvoke();
             $scope.$apply();
-            $timeout(function() {
+            timeoutPromise =  $timeout(function() {
                 intervalPromise = $interval( function(){
                     if(isTouchDownPersist){
                         functionToInvoke();
                     } else {
                         cancelInterval();
+                        cancelTimeout();
                     }
-                }, 100)
+                }, 150)
             }, 400);
         }
 
         onMouseUpHandler = function() {
             isTouchDownPersist = false;
             cancelInterval();
+            cancelTimeout();
         }
 
         cancelInterval = function() {
             $interval.cancel(intervalPromise);
             intervalPromise = null;
+        }
+
+        cancelTimeout = function() {
+            $timeout.cancel(timeoutPromise);
+            timeoutPromise = null;
         }
 
 
@@ -184,13 +197,19 @@ angular.module('ionic-timepicker.provider', [])
                     } else {
                         totalSec = ($scope.time.hours * 60 * 60) + ($scope.time.minutes * 60);
                     }
+                    document.body.removeEventListener('touchstart',onMouseDownHandler,false);
+                    document.body.removeEventListener('touchend', onMouseUpHandler,false);
                     $scope.mainObj.callback(totalSec);
                 }
             });
 
             buttons.push({
                 text: $scope.mainObj.closeLabel,
-                type: 'button_close'
+                type: 'button_close',
+                onTap: function(e){
+                    document.body.removeEventListener('touchstart',onMouseDownHandler,false);
+                    document.body.removeEventListener('touchend', onMouseUpHandler,false);
+                }
             });
 
             $scope.popup = $ionicPopup.show({
