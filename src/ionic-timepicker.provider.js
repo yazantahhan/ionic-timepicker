@@ -181,6 +181,15 @@ angular.module('ionic-timepicker.provider', [])
             setMinSecs($scope.mainObj.inputTime, $scope.mainObj.format);
 
             buttons.push({
+                text: $scope.mainObj.closeLabel,
+                type: 'button_close',
+                onTap: function(e){
+                    document.body.removeEventListener('touchstart',onMouseDownHandler,false);
+                    document.body.removeEventListener('touchend', onMouseUpHandler,false);
+                }
+            });
+
+            buttons.push({
                 text: $scope.mainObj.setLabel,
                 type: 'button_set',
                 onTap: function(e) {
@@ -200,15 +209,6 @@ angular.module('ionic-timepicker.provider', [])
                     document.body.removeEventListener('touchstart',onMouseDownHandler,false);
                     document.body.removeEventListener('touchend', onMouseUpHandler,false);
                     $scope.mainObj.callback(totalSec);
-                }
-            });
-
-            buttons.push({
-                text: $scope.mainObj.closeLabel,
-                type: 'button_close',
-                onTap: function(e){
-                    document.body.removeEventListener('touchstart',onMouseDownHandler,false);
-                    document.body.removeEventListener('touchend', onMouseUpHandler,false);
                 }
             });
 
