@@ -185,8 +185,7 @@ angular.module('ionic-timepicker.provider', [])
                 text: $scope.mainObj.closeLabel,
                 type: 'button_close',
                 onTap: function(e){
-                    document.body.removeEventListener('touchstart',onMouseDownHandler,false);
-                    document.body.removeEventListener('touchend', onMouseUpHandler,false);
+                    domElement.unbind();
                 }
             });
 
@@ -207,8 +206,7 @@ angular.module('ionic-timepicker.provider', [])
                     } else {
                         totalSec = ($scope.time.hours * 60 * 60) + ($scope.time.minutes * 60);
                     }
-                    domElement.removeEventListener('touchstart',onMouseDownHandler,false);
-                    domElement.removeEventListener('touchend', onMouseUpHandler,false);
+                    domElement.unbind();
                     $scope.mainObj.callback(totalSec);
                 }
             });
