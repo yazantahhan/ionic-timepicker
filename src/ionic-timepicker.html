@@ -4,7 +4,7 @@
     <div class="col col-25" ng-class="{'col-offset-20 col-25':time.format == 24}">
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows increase" touch-events-handler>
         <i class="icon ion-chevron-up"></i></button>
-      <div ng-bind="time.hours" class="time_picker_box_text"></div>
+      <input ng-model="time.hours" class="time_picker_box_text" type="tel" ng-keydown="keyDownHandler($event,'hours')"  ng-disabled="mainObj.disabled">
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows decrease" touch-events-handler>
         <i class="icon ion-chevron-down"></i></button>
     </div>
@@ -13,7 +13,7 @@
     <div class="col col-25" ng-class="{'col-25':time.format == 24}">
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows"
               ng-click="increaseMinutes()"><i class="icon ion-chevron-up"></i></button>
-      <div ng-bind="time.minutes" class="time_picker_box_text"></div>
+      <input ng-model="time.minutes" class="time_picker_box_text" type="tel" ng-keydown="keyDownHandler($event,'min')"  ng-disabled="mainObj.disabled">
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows"
               ng-click="decreaseMinutes()"><i class="icon ion-chevron-down"></i></button>
     </div>
@@ -22,7 +22,7 @@
     <div class="col col-25" ng-if="time.format == 12">
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows"
               ng-click="changeMeridian()"><i class="icon ion-chevron-up"></i></button>
-      <div ng-bind="time.meridian" class="time_picker_box_text"></div>
+      <div ng-bind="time.meridian" class="time_picker_box_text"></div>     
       <button type="button" class="button button-clear button-small button-dark time_picker_arrows"
               ng-click="changeMeridian()"><i class="icon ion-chevron-down"></i></button>
     </div>

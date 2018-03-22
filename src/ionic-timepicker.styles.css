@@ -63,3 +63,11 @@ For example, you might change some of the default colors:
   background-color: #009688;
   color: #ffffff;
 }
+
+.ionic_timepicker_popup .disabled-btn {
+  margin-top: -6px;
+  opacity: .4;
+  pointer-events: none;
+  background-color: #f8f8f8;
+  color: #444;
+}
