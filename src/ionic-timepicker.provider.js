@@ -206,7 +206,7 @@ angular.module('ionic-timepicker.provider', [])
                     }
 
                     if (type === 'hours') {
-                        if ($scope.time.format === 12 ? +$scope.time.hours > 12 : +$scope.time.hours > 24) {
+                        if ($scope.time.format === 12 ? +$scope.time.hours > 12 : +$scope.time.hours >= 24) {
                             $scope.time.hours = '00';
                         }
                     } else {
@@ -217,15 +217,6 @@ angular.module('ionic-timepicker.provider', [])
                     $scope.buttons[1].type = 'button_set';
                 },50);
             }
-
-            // $scope.shouldDisableSetButtons = function () {
-            //     if ($scope.time.hours === '' || $scope.time.minutes === '') {
-            //         return 'disabled-btn';
-            //     }
-            //     var hourCondition = $scope.time.format === 12 ? +$scope.time.hours > 12 : +$scope.time.hours > 24;
-            //     var minCondition = +$scope.time.minutes < 0 || +$scope.time.minutes > 59;
-            //     return (hourCondition || minCondition) ? 'disabled-btn' : 'button_set';
-            // }
 
             provider.openTimePicker = function (ipObj) {
                 $scope.buttons = [];
