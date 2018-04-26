@@ -49,9 +49,9 @@ angular.module('ionic-timepicker.provider', [])
                 isTouchDownPersist = true;
                 var functionToInvoke;
                 if (event.target.classList.contains('increase')) {
-                    functionToInvoke = increaseHours;
+                    functionToInvoke = event.target.classList.contains('hours') ? increaseHours : increaseMinutes;
                 } else {
-                    functionToInvoke = decreaseHours;
+                    functionToInvoke = event.target.classList.contains('hours') ? decreaseHours : decreaseMinutes;
                 }
 
                 if (intervalPromise) {
@@ -132,7 +132,7 @@ angular.module('ionic-timepicker.provider', [])
             };
 
             //Increasing the minutes
-            $scope.increaseMinutes = function () {
+            var increaseMinutes = function () {
                 if ($scope.buttons[1].type === 'disabled-btn') {
                     $scope.buttons[1].type = 'button_set'
                 }
@@ -142,7 +142,7 @@ angular.module('ionic-timepicker.provider', [])
             };
 
             //Decreasing the minutes
-            $scope.decreaseMinutes = function () {
+            var decreaseMinutes = function () {
                 if ($scope.buttons[1].type === 'disabled-btn') {
                     $scope.buttons[1].type = 'button_set'
                 }
@@ -215,7 +215,7 @@ angular.module('ionic-timepicker.provider', [])
                         }
                     }
                     $scope.buttons[1].type = 'button_set';
-                },50);
+                }, 50);
             }
 
             provider.openTimePicker = function (ipObj) {
